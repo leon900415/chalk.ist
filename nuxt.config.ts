@@ -5,12 +5,7 @@ export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
 
   nitro: {
-    routeRules: {
-      "/": { prerender: true },
-    },
-    prerender: {
-      failOnError: false
-    }
+   preset: 'cloudflare-pages',
   },
 
   experimental: {
