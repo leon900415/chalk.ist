@@ -8,6 +8,9 @@ export default defineNuxtConfig({
     routeRules: {
       "/": { prerender: true },
     },
+    prerender: {
+      failOnError: false
+    }
   },
 
   experimental: {
