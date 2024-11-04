@@ -5,15 +5,13 @@ export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
 
   nitro: {
-    preset: 'cloudflare-pages',
+    preset: 'node-server',
     minify: true,
     compressPublicAssets: {
       gzip: true,
       brotli: true
     },
-    routeRules: {
-      '/**': { swr: true }
-    }
+    serveStatic: true,
   },
 
   experimental: {
@@ -177,13 +175,6 @@ export default defineNuxtConfig({
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id.includes('shiki')) return 'shiki';
-              if (id.includes('markdown-it')) return 'markdown';
-              if (id.includes('@vueuse')) return 'vueuse';
-              if (id.includes('@fontsource')) return 'fonts';
-              if (id.includes('@iconify')) return 'icons';
-              const match = id.match(/node_modules\/([^/]+)/);
-              if (match) return `vendor-${match[1]}`;
               return 'vendor';
             }
           }
@@ -203,6 +194,4 @@ export default defineNuxtConfig({
     "@fontsource/inter/400.css",
     "@fontsource/fira-code/400.css",
   ],
-
-  compatibilityDate: "2024-10-23",
 });
