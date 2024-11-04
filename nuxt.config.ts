@@ -5,11 +5,21 @@ export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
 
   nitro: {
-   preset: 'cloudflare-pages',
+    preset: 'cloudflare-pages',
+    minify: true,
+    compressPublicAssets: {
+      gzip: true,
+      brotli: true
+    },
+    routeRules: {
+      '/**': { swr: true }
+    }
   },
 
   experimental: {
-    payloadExtraction: false,
+    payloadExtraction: true,
+    renderJsonPayloads: true,
+    crossOriginPrefetch: true,
   },
 
   typescript: {
@@ -132,8 +142,9 @@ export default defineNuxtConfig({
       bodyAttrs: {
         class:
           "font-inter text-slate-500 subpixel-antialiased selection:bg-blue-600/50 selection:text-white",
-      },
+      }
     },
+    buildAssetsDir: '/_nuxt/',
   },
 
   scripts: {
@@ -164,6 +175,26 @@ export default defineNuxtConfig({
         "@vueuse/integrations/useFuse",
       ],
     },
+
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vue-vendor': ['vue', 'vue-router', '@vue/runtime-core'],
+            'ui-vendor': ['@vueuse/core', '@vueuse/head', 'radix-vue'],
+            'markdown-vendor': ['markdown-it', '@shikijs/markdown-it'],
+          }
+        }
+      },
+      chunkSizeWarningLimit: 1000,
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
+      }
+    }
   },
 
   css: [
@@ -171,16 +202,11 @@ export default defineNuxtConfig({
     "~/styles/color-picker.css",
     "~/styles/geist-mono.css",
     "~/styles/nova.css",
+    "@fontsource/inter/400.css",
+    "@fontsource/inter/700.css",
     "@fontsource/fira-code/400.css",
-    "@fontsource/fira-code/700.css",
     "@fontsource/ibm-plex-mono/400.css",
     "@fontsource/ibm-plex-mono/700.css",
-    "@fontsource/inter/400.css",
-    "@fontsource/inter/500.css",
-    "@fontsource/inter/600.css",
-    "@fontsource/inter/700.css",
-    "@fontsource/jetbrains-mono/400.css",
-    "@fontsource/jetbrains-mono/700.css",
     "@fontsource/source-code-pro/400.css",
     "@fontsource/source-code-pro/700.css",
   ],
