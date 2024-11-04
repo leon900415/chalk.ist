@@ -180,7 +180,7 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            'vue-vendor': ['vue', 'vue-router', '@vue/runtime-core'],
+            'vue-vendor': ['vue', '@vue/runtime-core'],
             'ui-vendor': ['@vueuse/core', '@vueuse/head', 'radix-vue'],
             'markdown-vendor': ['markdown-it', '@shikijs/markdown-it'],
           }
