@@ -169,11 +169,14 @@ export default defineNuxtConfig({
 
     build: {
       chunkSizeWarningLimit: 1000,
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true
+      minify: true,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+          }
         }
       }
     }
