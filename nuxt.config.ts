@@ -17,9 +17,9 @@ export default defineNuxtConfig({
   },
 
   experimental: {
-    payloadExtraction: true,
-    renderJsonPayloads: true,
-    crossOriginPrefetch: true,
+    payloadExtraction: false,
+    renderJsonPayloads: false,
+    crossOriginPrefetch: false,
   },
 
   typescript: {
@@ -145,6 +145,7 @@ export default defineNuxtConfig({
       }
     },
     buildAssetsDir: '/_nuxt/',
+    pageTransition: { mode: 'out-in' },
   },
 
   scripts: {
@@ -170,27 +171,27 @@ export default defineNuxtConfig({
     build: {
       chunkSizeWarningLimit: 1000,
       minify: true,
+      cssMinify: true,
+      sourcemap: false,
       rollupOptions: {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id.includes('@vueuse')) {
-                return 'vendor-vueuse';
-              }
-              if (id.includes('@fontsource')) {
-                return 'vendor-fonts';
-              }
-              if (id.includes('shiki') || id.includes('markdown')) {
-                return 'vendor-markdown';
-              }
-              if (id.includes('@iconify')) {
-                return 'vendor-icons';
-              }
-              return 'vendor-misc';
+              if (id.includes('shiki')) return 'shiki';
+              if (id.includes('markdown-it')) return 'markdown';
+              if (id.includes('@vueuse')) return 'vueuse';
+              if (id.includes('@fontsource')) return 'fonts';
+              if (id.includes('@iconify')) return 'icons';
+              const match = id.match(/node_modules\/([^/]+)/);
+              if (match) return `vendor-${match[1]}`;
+              return 'vendor';
             }
           }
         }
       }
+    },
+    optimizeDeps: {
+      exclude: ['vue-demi']
     }
   },
 
@@ -200,12 +201,7 @@ export default defineNuxtConfig({
     "~/styles/geist-mono.css",
     "~/styles/nova.css",
     "@fontsource/inter/400.css",
-    "@fontsource/inter/700.css",
     "@fontsource/fira-code/400.css",
-    "@fontsource/ibm-plex-mono/400.css",
-    "@fontsource/ibm-plex-mono/700.css",
-    "@fontsource/source-code-pro/400.css",
-    "@fontsource/source-code-pro/700.css",
   ],
 
   compatibilityDate: "2024-10-23",
