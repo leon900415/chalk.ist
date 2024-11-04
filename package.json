@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nuxt dev",
     "prepare": "nuxi prepare",
-    "build": "NITRO_PRESET=cloudflare-pages nuxt build",
+    "build": "nuxt build",
     "serve": "nuxt preview"
   },
   "prettier": {
