@@ -167,15 +167,6 @@ export default defineNuxtConfig({
       }),
     ],
 
-    optimizeDeps: {
-      include: [
-        "@vueuse/core",
-        "@vueuse/head",
-        "@vueuse/components",
-        "@vueuse/integrations/useFuse",
-      ],
-    },
-
     build: {
       chunkSizeWarningLimit: 1000,
       minify: 'terser',
