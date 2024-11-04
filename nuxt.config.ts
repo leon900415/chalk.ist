@@ -177,14 +177,6 @@ export default defineNuxtConfig({
     },
 
     build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'ui-vendor': ['@vueuse/core', '@vueuse/head', 'radix-vue'],
-            'markdown-vendor': ['markdown-it', '@shikijs/markdown-it'],
-          }
-        }
-      },
       chunkSizeWarningLimit: 1000,
       minify: 'terser',
       terserOptions: {
