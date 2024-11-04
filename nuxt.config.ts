@@ -60,7 +60,7 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: undefined,
       navigateFallbackDenylist: [/^(?!\/$).*/],
-      maximumFileSizeToCacheInBytes: 1024 * 1024 * 5,
+      maximumFileSizeToCacheInBytes: 1024 * 1024 * 10,
       globPatterns: [
         "**/*.{js,css,html,png,jpg,jpeg,svg,ico,json,txt,ttf,woff,woff2}",
       ],
@@ -174,7 +174,19 @@ export default defineNuxtConfig({
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              return 'vendor';
+              if (id.includes('@vueuse')) {
+                return 'vendor-vueuse';
+              }
+              if (id.includes('@fontsource')) {
+                return 'vendor-fonts';
+              }
+              if (id.includes('shiki') || id.includes('markdown')) {
+                return 'vendor-markdown';
+              }
+              if (id.includes('@iconify')) {
+                return 'vendor-icons';
+              }
+              return 'vendor-misc';
             }
           }
         }
